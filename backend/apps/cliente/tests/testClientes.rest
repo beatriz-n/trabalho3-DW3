@@ -1,0 +1,63 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{    
+    "UserName": "admin",
+    "Password": "admin"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.token}}
+
+
+### Teste de buscar todos os clientes
+GET http://localhost:40000/getAllClientes HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+}
+
+### Teste de buscar um cliente por ID
+POST http://localhost:40000/getClienteByID HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 1
+}
+
+### Teste de inserção de cliente
+POST http://localhost:40000/insertClientes HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "nome": "Roberto Teste",
+    "email": "cliente@teste.com",
+    "telefone": "123456789"
+}
+
+### Teste de atualização de cliente
+POST http://localhost:40000/updateClientes HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 5,
+    "nome": "Roberto Atualizado",
+    "email": "cliente@atualizado.com",
+    "telefone": "987654321"
+}
+
+### Teste de deletar cliente
+POST http://localhost:40000/DeleteClientes HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 5
+}

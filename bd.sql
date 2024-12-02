@@ -21,7 +21,7 @@
         email VARCHAR(255) UNIQUE NOT NULL,
         telefone VARCHAR(20),
         removido BOOLEAN DEFAULT FALSE
-        );
+    );
 
     -- Tabela Carros (Relacionamento 1:N com Clientes)
     CREATE TABLE Carros (
@@ -39,7 +39,7 @@
         descricao VARCHAR(255) NOT NULL,
         status BOOLEAN DEFAULT FALSE,
         removido BOOLEAN DEFAULT FALSE
-        );
+    );
 
     -- Tabela VagaCarro (Relacionamento M:N entre Carros e Vagas)
     CREATE TABLE VagaCarro (

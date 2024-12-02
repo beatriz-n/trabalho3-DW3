@@ -1,0 +1,63 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{    
+    "UserName": "admin",
+    "Password": "admin"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.token}}
+
+
+### Teste de buscar todos os carros
+GET http://localhost:40000/getAllCarros HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+}
+
+### Teste de buscar um carro pelo ID
+POST http://localhost:40000/getCarroByID HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 1
+}
+
+### Teste de inserção de um carro
+POST http://localhost:40000/insertCarros HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "cliente_id": 1,
+    "modelo": "Civic Teste",
+    "placa": "ABC1010"
+}
+
+### Teste de atualização de um carro
+POST http://localhost:40000/updateCarros HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 5,
+    "cliente_id": 2,
+    "modelo": "Civic Atualizado",
+    "placa": "ABC1111"
+}
+
+### Teste de deletar um carro
+POST http://localhost:40000/DeleteCarros HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 5
+}
