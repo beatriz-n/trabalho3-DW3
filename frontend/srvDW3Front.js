@@ -12,6 +12,8 @@ require('dotenv').config({ path: envFilePath });
 
 const port = process.env.PORT
 var rtIndex = require('./routes/rtIndex');
+var rtClientes = require('./routes/rtClientes');
+var rtCarros = require('./routes/rtCarros');
 jwtchave = process.env.JWTCHAVE;
 
 
@@ -40,7 +42,8 @@ app.use(
 
 
 app.use('/', rtIndex);
-
+app.use('/clientes', rtClientes);
+app.use('/carros', rtCarros);
 
 
 app.listen(port, () => {

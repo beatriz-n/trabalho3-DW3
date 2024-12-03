@@ -85,5 +85,26 @@
     (3, 3, '2024-11-27 09:00:00', NULL, FALSE),
     (4, 4, '2024-11-27 07:00:00', NULL, FALSE);
 
-    select * from Usuarios
-    drop table Usuarios
+    -- Criação de função para atualizar removido na tabela Carros quando um cliente é removido
+    CREATE OR REPLACE FUNCTION update_carros_when_cliente_removed()
+    RETURNS TRIGGER AS $$
+    BEGIN
+    IF NEW.removido = TRUE THEN
+        UPDATE Carros
+        SET removido = TRUE
+        WHERE cliente_id = NEW.id;
+    END IF;
+    RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;
+
+    -- Criação de trigger que chama a função acima após atualização na tabela Clientes
+    CREATE TRIGGER trigger_update_carros_when_cliente_removed
+    AFTER UPDATE OF removido
+    ON Clientes
+    FOR EACH ROW
+    WHEN (NEW.removido = TRUE)
+    EXECUTE FUNCTION update_carros_when_cliente_removed();
+
+    --select * from Usuarios
+    --drop table Usuarios

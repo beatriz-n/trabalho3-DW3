@@ -4,7 +4,7 @@ const db = require("../../../database/databaseconfig");
 const getAllCarros = async () => {
   return (
     await db.query(
-      "SELECT * FROM carros WHERE removido = false ORDER BY modelo ASC"
+      "SELECT *, (SELECT nome FROM clientes WHERE id = carros.cliente_id AND clientes.removido != true) FROM carros WHERE removido = false ORDER BY modelo ASC"
     )
   ).rows;
 };
@@ -13,7 +13,7 @@ const getAllCarros = async () => {
 const getCarroByID = async (carroIDPar) => {
   return (
     await db.query(
-      "SELECT * FROM carros WHERE id = $1 AND removido = false",
+      "SELECT *, (SELECT nome FROM clientes WHERE id = carros.cliente_id AND clientes.removido != true) FROM carros WHERE id = $1 AND removido = false",
       [carroIDPar]
     )
   ).rows;
