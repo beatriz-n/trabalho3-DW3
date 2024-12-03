@@ -7,7 +7,7 @@ const axios = require("axios");
 const Login = async (req, res) =>
   (async () => {
     let remoteMSG = "sem mais informações";
-    console.log("Login "+ req.body);
+    //console.log("Login "+ req.body);
     if (req.method == "POST") {      
       const formData = req.body;
 
