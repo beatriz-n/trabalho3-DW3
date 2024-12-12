@@ -1,0 +1,60 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{    
+    "UserName": "admin",
+    "Password": "admin"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.token}}
+
+
+### Teste de buscar todas as vagas
+GET http://localhost:40000/getAllVagas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+}
+
+### Teste de buscar uma vaga por ID
+POST http://localhost:40000/getVagaByID HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 1
+}
+
+### Teste de inserção de vaga
+POST http://localhost:40000/insertVagas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "descricao": "A-01"
+}
+
+### Teste de atualização de vaga
+POST http://localhost:40000/updateVagas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 1,
+    "descricao": "AA-01",
+    "status": true
+}
+
+### Teste de deletar vaga
+POST http://localhost:40000/DeleteVagas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 5
+}
