@@ -5,6 +5,7 @@ const appLogin = require("../apps/login/controller/ctlLogin");
 const appCliente = require("../apps/cliente/controller/ctlClientes");
 const appCarro = require("../apps/carro/controller/ctlCarros");
 const appVaga = require("../apps/vaga/controller/ctlVagas");
+const appReserva = require("../apps/reserva/controller/ctlReservas");
 
 routerApp.use((req, res, next) => {
   next();
@@ -33,5 +34,12 @@ routerApp.post("/getVagaByID", appLogin.AutenticaJWT, appVaga.getVagaByID);
 routerApp.post("/insertVagas", appLogin.AutenticaJWT, appVaga.insertVagas);
 routerApp.post("/updateVagas", appLogin.AutenticaJWT, appVaga.updateVagas);
 routerApp.post("/DeleteVagas", appLogin.AutenticaJWT, appVaga.DeleteVagas);
+
+// Rotas de Reservas
+routerApp.get("/getAllReservas", appLogin.AutenticaJWT, appReserva.getAllReservas);
+routerApp.post("/getReservaByID", appLogin.AutenticaJWT, appReserva.getReservaByID);
+routerApp.post("/insertReservas", appLogin.AutenticaJWT, appReserva.insertReservas);
+routerApp.post("/updateReservas", appLogin.AutenticaJWT, appReserva.updateReservas);
+routerApp.post("/DeleteReservas", appLogin.AutenticaJWT, appReserva.DeleteReservas);
 
 module.exports = routerApp;

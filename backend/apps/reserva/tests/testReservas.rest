@@ -1,0 +1,64 @@
+### Necessário para pegar o token
+### Post
+# @name loginAutenticado
+POST http://localhost:40000/Login HTTP/1.1
+content-type: application/json
+
+{    
+    "UserName": "admin",
+    "Password": "admin"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.token}}
+
+
+### Teste de buscar todas as reservas
+GET http://localhost:40000/getAllReservas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+}
+
+### Teste de buscar uma reserva por ID
+POST http://localhost:40000/getReservaByID HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 1
+}
+
+### Teste de inserção de reserva
+POST http://localhost:40000/insertReservas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "carro_id": "2",
+    "vaga_id": "3",
+    "data_entrada": "2024-12-10 14:00:00"
+}
+
+### Teste de atualização de reserva
+POST http://localhost:40000/updateReservas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 5,
+    "carro_id": "2",
+    "vaga_id": "3",
+    "data_entrada": "2024-12-10 14:00:00",
+    "data_saida": "2024-12-21 11:00:00"
+}
+
+### Teste de deletar reserva
+POST http://localhost:40000/DeleteReservas HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{    
+    "id": 5
+}
