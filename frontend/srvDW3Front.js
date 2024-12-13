@@ -14,6 +14,7 @@ const port = process.env.PORT
 var rtIndex = require('./routes/rtIndex');
 var rtClientes = require('./routes/rtClientes');
 var rtCarros = require('./routes/rtCarros');
+var rtVagas = require('./routes/rtVagas');
 jwtchave = process.env.JWTCHAVE;
 
 
@@ -44,6 +45,7 @@ app.use(
 app.use('/', rtIndex);
 app.use('/clientes', rtClientes);
 app.use('/carros', rtCarros);
+app.use('/vagas', rtVagas);
 
 
 app.listen(port, () => {

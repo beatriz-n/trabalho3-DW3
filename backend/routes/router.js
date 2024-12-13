@@ -11,6 +11,7 @@ routerApp.use((req, res, next) => {
   next();
 });
 
+// Rotas de Login
 routerApp.post("/Login", appLogin.Login);
 routerApp.post("/Logout", appLogin.Logout);
 
