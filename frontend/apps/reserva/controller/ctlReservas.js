@@ -6,40 +6,73 @@ const manutReservas = async (req, res) =>
     const userName = req.session.userName;
     const token = req.session.token;
 
-    const resp = await axios.get(process.env.SERVIDOR_DW3Back + "/getAllReservas", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    }).catch(error => {
-      if (error.code === "ECONNREFUSED") {
-        remoteMSG = "Servidor indisponível"
+    try {
+      // Buscar todas as reservas
+      const reservasResponse = await axios.get(process.env.SERVIDOR_DW3Back + "/getAllReservas", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-      } else if (error.code === "ERR_BAD_REQUEST") {
-        remoteMSG = "Usuário não autenticado";
+      // Buscar todos os carros
+      const carrosResponse = await axios.get(process.env.SERVIDOR_DW3Back + "/getAllCarros", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-      } else {
-        remoteMSG = error;
-      }
+      // Buscar todas as vagas
+      const vagasResponse = await axios.get(process.env.SERVIDOR_DW3Back + "/getAllVagas", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const reservas = reservasResponse.data.registro;
+      const carros = carrosResponse.data.registro;
+      const vagas = vagasResponse.data.registro;
+
+      // Adicionar informações de carro e vaga às reservas
+      const reservasComDetalhes = reservas.map(reserva => {
+        const carro = carros.find(carro => carro.id === reserva.carro_id) || {};
+        const vaga = vagas.find(vaga => vaga.id === reserva.vaga_id) || {};
+        return {
+          ...reserva,
+          modelo: carro.modelo || "Não informado",
+          placa: carro.placa || "Não informado",
+          descricaoVaga: vaga.descricao || "Não informada",
+          data_entrada: moment(reserva.data_entrada).format("DD/MM/YYYY HH:mm"),
+          data_saida: reserva.data_saida
+            ? moment(reserva.data_saida).format("DD/MM/YYYY HH:mm")
+            : "Em aberto"
+        };
+      });
+
+      res.render("reserva/view/vwManutReservas.njk", {
+        title: "Manutenção de Reservas",
+        data: reservasComDetalhes,
+        erro: null,
+        userName: userName,
+      });
+    } catch (error) {
+      const remoteMSG = error.code === "ECONNREFUSED"
+        ? "Servidor indisponível"
+        : error.code === "ERR_BAD_REQUEST"
+          ? "Usuário não autenticado"
+          : error.message;
+
       res.render("reserva/view/vwManutReservas.njk", {
         title: "Manutenção de Reservas",
         data: null,
         erro: remoteMSG,
         userName: userName,
       });
-    });
-
-    if (!resp) {
-      return;
     }
-
-    res.render("reserva/view/vwManutReservas.njk", {
-      title: "Manutenção de Reservas",
-      data: resp.data.registro,
-      erro: null,
-      userName: userName,
-    });
   })();
+
 
 const insertReservas = async (req, res) =>
   (async () => {
@@ -61,7 +94,7 @@ const insertReservas = async (req, res) =>
       });
 
       // Filtrar disponíveis
-      const vagasDisponiveis = vagas.data.registro.filter(vaga => vaga.status === false);      
+      const vagasDisponiveis = vagas.data.registro.filter(vaga => vaga.status === false);
 
       return res.render("reserva/view/vwFCrReservas.njk", {
         title: "Cadastro de Reservas",
@@ -139,7 +172,7 @@ const viewReservas = async (req, res) =>
           });
 
           // Filtrar disponíveis
-          const vagasDisponiveis = vagas.data.registro.filter(vaga => vaga.status === false);          
+          const vagasDisponiveis = vagas.data.registro.filter(vaga => vaga.status === false);
 
           res.render("reserva/view/vwFRUDrReservas.njk", {
             title: "Visualização de Reservas",
@@ -197,7 +230,7 @@ const updateReservas = async (req, res) =>
           });
 
           // Filtrar disponíveis
-          const vagasDisponiveis = vagas.data.registro.filter(vaga => vaga.status === false);          
+          const vagasDisponiveis = vagas.data.registro.filter(vaga => vaga.status === false);
 
           res.render("reserva/view/vwFRUDrReservas.njk", {
             title: "Atualização de dados da Reserva",
