@@ -71,7 +71,7 @@
                 console.log("Valor na response:", response);
                 console.log("Valor na result:", result);
                 if (result.status == "ok") {
-                  alert("Cliente cadastrado com suscesso");
+                  alert("Carro cadastrado com suscesso");
                   this.resetForm();
                 } else {
                   const errorData = result.status;
@@ -87,9 +87,9 @@
             },
             resetForm() {
               this.form = {
-              nome: '',
-              email: '',
-              telefone: '',
+              cliente_id: '',
+              modelo: '',
+              placa: '',
               deleted: false
               };
               this.message = false;

@@ -1,0 +1,61 @@
+{% extends "templates/base.html" %}
+
+{% block content %}
+  <ol class="breadcrumb mb-2">
+    <li class="breadcrumb-item active">{{ title }}</li>
+  </ol>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card-body">
+        <div class="">
+          <div style="margin-bottom: 15px;">
+            <a href="/reservas/InsertReservas" class="btn btn-primary">
+              Inserir Reserva
+            </a>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th class="text-center">Placa</th>
+                  <th class="text-center">Vaga</th>
+                  <th class="text-center">Data Entrada</th>
+                  <th class="text-center">Data Saída</th>
+                  <th class="text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for reg in data %}
+                  <tr>
+                    <td  class="text-center">{{ reg.placa }}</td>
+                    <td class="text-center">{{ reg.descricao }}</td>
+                    <td class="text-center">{{ reg.data_entrada }}</td>
+                    <td class="text-center">{{ reg.data_saida }}</td>
+                    <td class="text-center">
+                      <a href="/reservas/ViewReservas/{{ reg.id }}" title="Visualizar">
+                        <i class="fas fa-search"></i>
+                      </a>
+                      <a href="/reservas/UpdateReservas/{{ reg.id }}" title="Atualizar" style="margin-left: 10px;">
+                        <i class="fas fa-pencil-alt"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      windowOnLoad();
+      const localErro = "{{ erro }}";
+      if (localErro != "") {
+        alert("[vwReservas|onload]Servidor retornou o erro:" + localErro);
+      }
+      new DataTable('#dataTable');
+    };
+  </script>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "templates/base.html" %}
+
+{% block content %}
+  <div x-data="reservasForm()">
+    <ol class="breadcrumb mb-2">
+      <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+    <div class="card-body">
+      <div class="">
+        <form>
+          <div class="form-group col-md-12">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="vagaid">Vaga</label>
+                  <select class="form-select" aria-label="Default select example" id="vagaid" x-model="form.vaga_id" x-bind:disabled="disabled" name="vagaid">
+                    {% for reg in vaga %}
+                      <option value="{{reg.id}}">{{reg.descricao}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="carroid">Carro</label>
+                  <select class="form-select" aria-label="Default select example" id="carroid" x-model="form.carro_id" x-bind:disabled="disabled" name="carroid">
+                    {% for reg in carro %}
+                      <option value="{{reg.id}}">{{reg.modelo}} - {{reg.placa}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="data_entrada">Data de Entrada</label>
+                  <input type="datetime-local" class="form-control" id="data_entrada" x-model="form.data_entrada" x-bind:disabled="disabled">
+                </div>
+              </div>
+            </div>
+
+            <button type="button" @click="insertForm()" class="btn btn-primary mt-4">Salvar</button>
+            <a href="/reservas/ManutReservas" class="btn btn-info mt-4 ml-2" role="button">Retornar</a>
+          </form>
+
+          <div class="mt-3">
+            <template x-if="message">
+              <div :class="messageClass" x-text="message"></div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function reservasForm() {
+        return {
+          form: {
+            vaga_id: '',
+            carro_id: '',
+            data_entrada: ''
+          },
+          message: '',
+          messageClass: '',
+          async insertForm() {
+            try {
+              console.log("Valor na página:", JSON.stringify(this.form))
+              const response = await fetch('/reservas/InsertReservas', {
+                method: 'POST',
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(this.form)
+              });
+              const result = await response.json();
+              console.log("Valor na response:", response);
+              console.log("Valor na result:", result);
+              if (result.status == "ok") {
+                alert("Reserva cadastrada com suscesso");
+                this.resetForm();
+              } else {
+                const errorData = result.status;
+                this.message = `Erro! Não foi possível cadastrar a reserva devido ao erro: ${errorData}`;
+                this.messageClass = 'alert alert-danger';
+              }
+            } catch (error) {
+              this.message = `Erro de conexão: ${
+              error.message}`;
+              this.messageClass = 'alert alert-danger';
+            }
+          },
+          resetForm() {
+            this.form = {
+              vaga_id: '',
+              carro_id: '',
+              data_entrada: ''
+            };
+            this.message = false;
+          }
+        };
+      }
+    </script>
+
+  {% endblock %}
