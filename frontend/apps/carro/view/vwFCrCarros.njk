@@ -14,6 +14,7 @@
                 <div class="form-group">
                   <label for="clienteid">Cliente</label>
                   <select class="form-select" aria-label="Default select example" id="clienteid" x-model="form.cliente_id" x-bind:disabled="disabled" name="clienteid">
+                    <option value="">[Selecione]</option>
                     {% for reg in cliente %}
                         <option value="{{reg.id}}">{{reg.nome}}</option>
                     {% endfor %}

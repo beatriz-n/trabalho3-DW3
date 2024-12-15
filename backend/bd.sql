@@ -1,7 +1,6 @@
     -- Nome BD: garagem --
-
-    -- Tabela Usuarios
-    create table IF NOT EXISTS Usuarios (
+-- Tabela Usuarios
+ create table IF NOT EXISTS Usuarios (
         usuarioid bigserial constraint pk_usuarios PRIMARY KEY,
         username varchar(10) UNIQUE,
         password text,
@@ -14,47 +13,50 @@
         (default, 'admin', crypt('admin', gen_salt('bf')))
     ON CONFLICT DO NOTHING;
 
-    -- Tabela Clientes
-    CREATE TABLE Clientes (
-        id SERIAL PRIMARY KEY,
-        nome VARCHAR(255) NOT NULL,
-        email VARCHAR(255) UNIQUE NOT NULL,
-        telefone VARCHAR(20),
-        removido BOOLEAN DEFAULT FALSE
-    );
+-- Tabela Clientes
+CREATE TABLE Clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    telefone VARCHAR(20),
+    removido BOOLEAN DEFAULT FALSE,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-    -- Tabela Carros (Relacionamento 1:N com Clientes)
-    CREATE TABLE Carros (
-        id SERIAL PRIMARY KEY,
-        cliente_id INT NOT NULL,
-        modelo VARCHAR(255) NOT NULL,
-        placa VARCHAR(20) UNIQUE NOT NULL,
-        removido BOOLEAN DEFAULT FALSE,
-        CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES Clientes(id)
-    );
+-- Tabela Carros
+CREATE TABLE Carros (
+    id SERIAL PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    modelo VARCHAR(255) NOT NULL,
+    placa VARCHAR(20) UNIQUE NOT NULL,
+    removido BOOLEAN DEFAULT FALSE,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES Clientes(id)
+);
 
-    -- Tabela Vagas
-    CREATE TABLE Vagas (
-        id SERIAL PRIMARY KEY,
-        descricao VARCHAR(255) NOT NULL,
-        status BOOLEAN DEFAULT FALSE,
-        removido BOOLEAN DEFAULT FALSE
-    );
+-- Tabela Vagas
+CREATE TABLE Vagas (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL,
+    status BOOLEAN DEFAULT FALSE,
+    removido BOOLEAN DEFAULT FALSE,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-    -- Tabela VagaCarro (Relacionamento M:N entre Carros e Vagas)
-    CREATE TABLE VagaCarro (
-        id SERIAL PRIMARY KEY,
-        carro_id INT NOT NULL,
-        vaga_id INT NOT NULL,
-        data_entrada TIMESTAMP NOT NULL,
-        data_saida TIMESTAMP,
-        removido BOOLEAN DEFAULT FALSE,
-        CONSTRAINT fk_carro FOREIGN KEY (carro_id) REFERENCES Carros(id),
-        CONSTRAINT fk_vaga FOREIGN KEY (vaga_id) REFERENCES Vagas(id)
-    );
+-- Tabela VagaCarro
+CREATE TABLE VagaCarro (
+    id SERIAL PRIMARY KEY,
+    carro_id INT NOT NULL,
+    vaga_id INT NOT NULL,
+    data_entrada TIMESTAMP NOT NULL,
+    data_saida TIMESTAMP,
+    removido BOOLEAN DEFAULT FALSE,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_carro FOREIGN KEY (carro_id) REFERENCES Carros(id),
+    CONSTRAINT fk_vaga FOREIGN KEY (vaga_id) REFERENCES Vagas(id)
+);
 
-    -- Inserções na tabela Clientes
-    INSERT INTO Clientes (nome, email, telefone, removido) 
+INSERT INTO Clientes (nome, email, telefone, removido) 
     VALUES 
     ('João Silva', 'joao.silva@email.com', '123456789', FALSE),
     ('Maria Oliveira', 'maria.oliveira@email.com', '987654321', FALSE),
@@ -105,6 +107,3 @@
     FOR EACH ROW
     WHEN (NEW.removido = TRUE)
     EXECUTE FUNCTION update_carros_when_cliente_removed();
-
-    --select * from Usuarios
-    --drop table Usuarios

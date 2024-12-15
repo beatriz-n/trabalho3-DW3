@@ -14,6 +14,7 @@
                 <div class="form-group">
                   <label for="vagaid">Vaga</label>
                   <select class="form-select" aria-label="Default select example" id="vagaid" x-model="form.vaga_id" x-bind:disabled="disabled" name="vagaid">
+                                        <option value="">[Selecione]</option>
                     {% for reg in vaga %}
                       <option value="{{reg.id}}">{{reg.descricao}}</option>
                     {% endfor %}
@@ -24,6 +25,7 @@
                 <div class="form-group">
                   <label for="carroid">Carro</label>
                   <select class="form-select" aria-label="Default select example" id="carroid" x-model="form.carro_id" x-bind:disabled="disabled" name="carroid">
+                    <option value="">[Selecione]</option>
                     {% for reg in carro %}
                       <option value="{{reg.id}}">{{reg.modelo}} - {{reg.placa}}</option>
                     {% endfor %}
