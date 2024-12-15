@@ -2,59 +2,59 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="col-xl-12">
+  <div class="row">
+    <div class="col-xl-12">
 
-    <div class="card-header bg-success text-white">
-      <p class="mb-0">{{ parametros.title }}</p>
-    </div>
-
-    <div class="card-body">
-      <div class="row text-center">
-
-        <!-- Card de Vagas Disponíveis -->
-        <div class="col-md-4 mb-4">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <i class="fas fa-parking fa-3x mb-3 text-success"></i>
-              <h5 class="card-title">Vagas Disponíveis</h5>
-              <p class="text-sucess">{{ data.vagas_disponiveis }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card de Vagas Ocupadas -->
-        <div class="col-md-4 mb-4">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <i class="fas fa-car-side fa-3x mb-3 text-warning"></i>
-              <h5 class="card-title">Vagas Ocupadas</h5>
-              <p class="text-danger">{{ data.vagas_ocupadas }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card de Vagas Totais -->
-        <div class="col-md-4 mb-4">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <i class="fas fa-warehouse fa-3x mb-3 text-info"></i>
-              <h5 class="card-title">Total de Vagas</h5>
-              <p class="text-primary">{{ data.total_vagas }}</p>
-            </div>
-          </div>
-        </div>
-
+      <div class="card-header bg-success text-white">
+        <p class="mb-0">{{ parametros.title }}</p>
       </div>
+
+      <div class="card-body">
+        <div class="row text-center">
+
+          <!-- Card de Vagas Disponíveis -->
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <i class="fas fa-parking fa-3x mb-3 text-success"></i>
+                <h5 class="card-title">Vagas Disponíveis</h5>
+                <h6 class="text-sucess"><b>{{ data.vagas_disponiveis }}</b></h6>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card de Vagas Ocupadas -->
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <i class="fas fa-car-side fa-3x mb-3 text-warning"></i>
+                <h5 class="card-title">Vagas Ocupadas</h5>
+                <h6 class="text-danger"><b>{{ data.vagas_ocupadas }}</b></h6>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card de Vagas Totais -->
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <i class="fas fa-warehouse fa-3x mb-3 text-info"></i>
+                <h5 class="card-title">Total de Vagas</h5>
+                <h6 class="text-primary"><b>{{ data.total_vagas }}</b></h6>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-
   </div>
-</div>
 
-<script>
-  window.onload = function () {
-    windowOnLoad();
-  };
-</script>
+  <script>
+    window.onload = function () {
+      windowOnLoad();
+    };
+  </script>
 
 {% endblock %}

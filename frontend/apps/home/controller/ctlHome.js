@@ -1,44 +1,42 @@
-// const axios = require("axios");
+const axios = require('axios'); // Adicionando a importação do axios
 
-// const getTotalVagas = async (req, res) =>
-//   (async () => {
-//     const userName = req.session.userName;
-//     const token = req.session.token;
+const homePage = async (req, res) => {
+  const token = req.session.token;
+  const userName = req.session.userName;
 
-//     const resp = await axios.get(process.env.SERVIDOR_DW3Back + "/getTotalVagas", {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`
-//       }
-    
-//     }).catch(error => {
-//       if (error.code === "ECONNREFUSED") {
-//         remoteMSG = "Servidor indisponível"
+  try {
+    const vagas = await axios.get(process.env.SERVIDOR_DW3Back + "/getAllVagas", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-//       } else if (error.code === "ERR_BAD_REQUEST") {
-//         remoteMSG = "Usuário não autenticado";
+    // Contando vagas disponíveis e ocupadas
+    const vagasDisponiveis = vagas.data.registro.filter(vaga => vaga.status === false).length;
+    const vagasOcupadas = vagas.data.registro.filter(vaga => vaga.status === true).length;
+    const totalVagas = vagas.data.registro.length;
 
-//       } else {
-//         remoteMSG = error;
-//       }
-//       res.render("home/view/index.njk", {
-//         vagas: response.data,
-//         erro: remoteMSG,
-//         userName: userName,
-//       });
-//     });
+    res.render("home/view/index.njk", {
+        parametros: { title: "Dashboard" },
+        data: {
+          vagas_disponiveis: vagasDisponiveis,
+          vagas_ocupadas: vagasOcupadas,
+          total_vagas: totalVagas,
+        },
+        userName: userName,
+      });
+  } catch (error) {
+    console.error("[homePage] Erro ao carregar dados de vagas:", error.message);
+    res.render("home/view/index.njk", {
+      parametros: { title: "Dashboard" },
+      data: { vagas_disponiveis: 0, vagas_ocupadas: 0, total_vagas: 0 },
+      userName: userName,
+    });
+  }
+};
 
-//     if (!resp) {
-//       return;
-//     }
-//     res.render("home/view/index.njk", {
-//       data: resp.data.registro,
-//       totalVagas: response.data,
-//       erro: null,
-//       userName: userName,
-//     });
-//   })();
-
-// module.exports = {
-//   getTotalVagas
-// };
+// Exporte a função homePage
+module.exports = {
+  homePage,
+};

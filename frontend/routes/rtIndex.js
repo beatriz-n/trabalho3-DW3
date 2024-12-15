@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var loginApp = require("../apps/login/controller/ctlLogin")
+var homeApp = require("../apps/home/controller/ctlHome")
 
 function authenticationMiddleware(req, res, next) {
   isLogged = req.session.isLogged;
@@ -12,13 +13,7 @@ function authenticationMiddleware(req, res, next) {
   next();
 };
 
-router.get('/', authenticationMiddleware, function (req, res, next) {
-  userName = req.session.userName;    
-  parametros = { title: 'Home', Usuario: userName };
-
-  res.render('home/view/index.njk', { parametros });
-});
-
+router.get('/', authenticationMiddleware, homeApp.homePage); // Alteração aqui para chamar a função homePage
 
 router.get('/Login', loginApp.Login);
 
