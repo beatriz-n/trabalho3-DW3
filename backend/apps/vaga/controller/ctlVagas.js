@@ -37,10 +37,20 @@ const DeleteVagas = (request, res) =>
     res.json({ "status": msg, "linhasAfetadas": linhasAfetadas });
   })();
 
+  const getTotalVagas = (req, res) =>
+    (async () => {
+      let registro = await mdlVagas.getTotalVagas();
+        const row = registro[0];
+        console.log("Total de vagas: ", row);
+      res.json({ status: "ok", "registro": registro });
+    })();
+  
+
 module.exports = {
   getAllVagas,
   getVagaByID,
   insertVagas,
   updateVagas,
-  DeleteVagas
+  DeleteVagas,
+  getTotalVagas
 };

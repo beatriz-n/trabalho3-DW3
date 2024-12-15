@@ -35,6 +35,7 @@ routerApp.post("/getVagaByID", appLogin.AutenticaJWT, appVaga.getVagaByID);
 routerApp.post("/insertVagas", appLogin.AutenticaJWT, appVaga.insertVagas);
 routerApp.post("/updateVagas", appLogin.AutenticaJWT, appVaga.updateVagas);
 routerApp.post("/DeleteVagas", appLogin.AutenticaJWT, appVaga.DeleteVagas);
+routerApp.post("/getTotalVagas", appLogin.AutenticaJWT, appVaga.getTotalVagas);
 
 // Rotas de Reservas
 routerApp.get("/getAllReservas", appLogin.AutenticaJWT, appReserva.getAllReservas);

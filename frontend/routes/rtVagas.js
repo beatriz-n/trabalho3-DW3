@@ -17,6 +17,7 @@ router.get('/ManutVagas', authenticationMiddleware, VagasApp.manutVagas);
 router.get('/InsertVagas', authenticationMiddleware, VagasApp.insertVagas);
 router.get('/ViewVagas/:id', authenticationMiddleware, VagasApp.viewVagas);
 router.get('/UpdateVagas/:id', authenticationMiddleware, VagasApp.updateVagas);
+router.get('/getTotalVagas',authenticationMiddleware, VagasApp.getTotalVagas);
 
 /* POST métodos */
 router.post('/InsertVagas', authenticationMiddleware, VagasApp.insertVagas);

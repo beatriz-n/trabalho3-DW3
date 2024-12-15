@@ -87,10 +87,19 @@ const deleteVagas = async (vagaREGPar) => {
   return { msg, linhasAfetadas };
 };
 
+  const getTotalVagas = async () => {
+    return (
+      await db.query(
+        "SELECT COUNT(*) AS total_vagas, COUNT(CASE WHEN status = FALSE AND removido = FALSE THEN 1 END) AS vagas_disponiveis, COUNT(CASE WHEN status = TRUE AND removido = FALSE THEN 1 END) AS vagas_ocupadas FROM Vagas;"
+      )
+    ).rows;
+  };
+
 module.exports = {
   getAllVagas,
   getVagaByID,
   insertVagas,
   updateVagas,
   deleteVagas,
+  getTotalVagas
 };

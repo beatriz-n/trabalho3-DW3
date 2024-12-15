@@ -225,10 +225,49 @@ const deleteVagas = async (req, res) =>
     }
   })();
 
+  const getTotalVagas = async (req, res) =>
+    (async () => {
+      const userName = req.session.userName;
+      const token = req.session.token;
+  
+      const resp = await axios.get(process.env.SERVIDOR_DW3Back + "/getTotalVagas", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      
+      }).catch(error => {
+        if (error.code === "ECONNREFUSED") {
+          remoteMSG = "Servidor indisponível"
+  
+        } else if (error.code === "ERR_BAD_REQUEST") {
+          remoteMSG = "Usuário não autenticado";
+  
+        } else {
+          remoteMSG = error;
+        }
+        res.render("../../home/view/index.njk", {
+          data: resp.data.registro,
+          erro: remoteMSG,
+          userName: userName,
+        });
+      });
+  
+      if (!resp) {
+        return;
+      }
+      res.render("../../home/view/index.njk", {
+        data: resp.data.registro,
+        erro: null,
+        userName: userName,
+      });
+    })();
+
 module.exports = {
   manutVagas,
   insertVagas,
   viewVagas,
   updateVagas,
-  deleteVagas
+  deleteVagas,
+  getTotalVagas
 };
