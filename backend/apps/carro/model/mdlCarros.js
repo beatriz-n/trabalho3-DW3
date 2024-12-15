@@ -1,6 +1,5 @@
 const db = require("../../../database/databaseconfig");
 
-// Buscar todos os carros
 const getAllCarros = async () => {
   return (
     await db.query(
@@ -9,7 +8,6 @@ const getAllCarros = async () => {
   ).rows;
 };
 
-// Buscar um carro pelo ID
 const getCarroByID = async (carroIDPar) => {
   return (
     await db.query(
@@ -19,7 +17,6 @@ const getCarroByID = async (carroIDPar) => {
   ).rows;
 };
 
-// Inserir um novo carro
 const insertCarros = async (carroREGPar) => {
   let linhasAfetadas;
   let msg = "ok";
@@ -43,7 +40,6 @@ const insertCarros = async (carroREGPar) => {
   return { msg, linhasAfetadas };
 };
 
-// Atualizar um carro existente
 const updateCarros = async (carroREGPar) => {
   let linhasAfetadas;
   let msg = "ok";
@@ -72,7 +68,6 @@ const updateCarros = async (carroREGPar) => {
   return { msg, linhasAfetadas };
 };
 
-// Marcar um carro como removido
 const deleteCarros = async (carroREGPar) => {
   let linhasAfetadas;
   let msg = "ok";

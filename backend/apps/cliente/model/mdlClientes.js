@@ -1,6 +1,5 @@
 const db = require("../../../database/databaseconfig");
 
-// Buscar todos os clientes
 const getAllClientes = async () => {
   return (
     await db.query(
@@ -9,7 +8,6 @@ const getAllClientes = async () => {
   ).rows;
 };
 
-// Buscar um cliente pelo ID
 const getClienteByID = async (clienteIDPar) => {
   return (
     await db.query(
@@ -19,7 +17,6 @@ const getClienteByID = async (clienteIDPar) => {
   ).rows;
 };
 
-// Inserir um novo cliente
 const insertClientes = async (clienteREGPar) => {
   let linhasAfetadas;
   let msg = "ok";
@@ -43,7 +40,6 @@ const insertClientes = async (clienteREGPar) => {
   return { msg, linhasAfetadas };
 };
 
-// Atualizar um cliente existente
 const updateClientes = async (clienteREGPar) => {
   let linhasAfetadas;
   let msg = "ok";
@@ -72,7 +68,6 @@ const updateClientes = async (clienteREGPar) => {
   return { msg, linhasAfetadas };
 };
 
-// Marcar um cliente como removido
 const deleteClientes = async (clienteREGPar) => {
   let linhasAfetadas;
   let msg = "ok";

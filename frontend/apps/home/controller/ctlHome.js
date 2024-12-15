@@ -12,7 +12,6 @@ const homePage = async (req, res) => {
       },
     });
 
-    // Contando vagas disponíveis e ocupadas
     const vagasDisponiveis = vagas.data.registro.filter(vaga => vaga.status === false).length;
     const vagasOcupadas = vagas.data.registro.filter(vaga => vaga.status === true).length;
     const totalVagas = vagas.data.registro.length;
@@ -36,7 +35,6 @@ const homePage = async (req, res) => {
   }
 };
 
-// Exporte a função homePage
 module.exports = {
   homePage,
 };

@@ -1,6 +1,5 @@
 const db = require("../../../database/databaseconfig");
 
-// Buscar todas as vagas
 const getAllVagas = async () => {
   return (
     await db.query(
@@ -9,7 +8,6 @@ const getAllVagas = async () => {
   ).rows;
 };
 
-// Buscar uma vaga pelo ID
 const getVagaByID = async (vagaIDPar) => {
   return (
     await db.query(
@@ -19,7 +17,6 @@ const getVagaByID = async (vagaIDPar) => {
   ).rows;
 };
 
-// Inserir uma nova vaga
 const insertVagas = async (vagaREGPar) => {
   let linhasAfetadas;
   let msg = "ok";
@@ -41,7 +38,6 @@ const insertVagas = async (vagaREGPar) => {
   return { msg, linhasAfetadas };
 };
 
-// Atualizar uma vaga existente
 const updateVagas = async (vagaREGPar) => {
   let linhasAfetadas;
   let msg = "ok";
@@ -68,7 +64,6 @@ const updateVagas = async (vagaREGPar) => {
   return { msg, linhasAfetadas };
 };
 
-// Marcar uma vaga como removida
 const deleteVagas = async (vagaREGPar) => {
   let linhasAfetadas;
   let msg = "ok";

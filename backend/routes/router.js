@@ -11,25 +11,21 @@ routerApp.use((req, res, next) => {
   next();
 });
 
-// Rotas de Login
 routerApp.post("/Login", appLogin.Login);
 routerApp.post("/Logout", appLogin.Logout);
 
-// Rotas de Cliente
 routerApp.get("/getAllClientes", appLogin.AutenticaJWT, appCliente.getAllClientes);
 routerApp.post("/getClienteByID", appLogin.AutenticaJWT, appCliente.getClienteByID);
 routerApp.post("/insertClientes", appLogin.AutenticaJWT, appCliente.insertClientes);
 routerApp.post("/updateClientes", appLogin.AutenticaJWT, appCliente.updateClientes);
 routerApp.post("/DeleteClientes", appLogin.AutenticaJWT, appCliente.DeleteClientes);
 
-// Rotas de Carro
 routerApp.get("/getAllCarros", appLogin.AutenticaJWT, appCarro.getAllCarros);
 routerApp.post("/getCarroByID", appLogin.AutenticaJWT, appCarro.getCarroByID);
 routerApp.post("/insertCarros", appLogin.AutenticaJWT, appCarro.insertCarros);
 routerApp.post("/updateCarros", appLogin.AutenticaJWT, appCarro.updateCarros);
 routerApp.post("/DeleteCarros", appLogin.AutenticaJWT, appCarro.DeleteCarros);
 
-// Rotas de Vaga
 routerApp.get("/getAllVagas", appLogin.AutenticaJWT, appVaga.getAllVagas);
 routerApp.post("/getVagaByID", appLogin.AutenticaJWT, appVaga.getVagaByID);
 routerApp.post("/insertVagas", appLogin.AutenticaJWT, appVaga.insertVagas);
@@ -37,7 +33,6 @@ routerApp.post("/updateVagas", appLogin.AutenticaJWT, appVaga.updateVagas);
 routerApp.post("/DeleteVagas", appLogin.AutenticaJWT, appVaga.DeleteVagas);
 routerApp.post("/getTotalVagas", appLogin.AutenticaJWT, appVaga.getTotalVagas);
 
-// Rotas de Reservas
 routerApp.get("/getAllReservas", appLogin.AutenticaJWT, appReserva.getAllReservas);
 routerApp.post("/getReservaByID", appLogin.AutenticaJWT, appReserva.getReservaByID);
 routerApp.post("/insertReservas", appLogin.AutenticaJWT, appReserva.insertReservas);
