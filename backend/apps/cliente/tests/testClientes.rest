@@ -47,10 +47,11 @@ content-type: application/json
 Authorization: Bearer {{accessToken}}
 
 {    
-    "id": 5,
+    "id": 2,
     "nome": "Roberto Atualizado",
     "email": "cliente@atualizado.com",
-    "telefone": "987654321"
+    "telefone": "987654321",
+    "mensalidade": "500.99"
 }
 
 ### Teste de deletar cliente

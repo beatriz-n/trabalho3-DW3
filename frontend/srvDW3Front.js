@@ -23,10 +23,12 @@ jwtchave = process.env.JWTCHAVE;
 var app = express();
 
 nunjucks.configure('apps', {
-    autoescape: true,
-    express: app,
-    watch: true
-});
+  autoescape: true,
+  express: app,
+  watch: true
+}).addFilter("currency", function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, { style: "currency", currency }).format(value || 0);
+});;
 
 app.use(express.static(__dirname));
 
@@ -35,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   session({
-    secret: process.env.JWTCHAVE, 
+    secret: process.env.JWTCHAVE,
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: null },

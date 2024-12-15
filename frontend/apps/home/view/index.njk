@@ -17,7 +17,9 @@
               <div class="card-body">
                 <i class="fas fa-parking fa-3x mb-3 text-success"></i>
                 <h5 class="card-title">Vagas Disponíveis</h5>
-                <h5 class="text-success"><b>{{ data.vagas_disponiveis }}</b></h5>
+                <h5 class="text-success">
+                  <b>{{ data.vagas_disponiveis }}</b>
+                </h5>
               </div>
             </div>
           </div>
@@ -27,7 +29,9 @@
               <div class="card-body">
                 <i class="fas fa-car-side fa-3x mb-3 text-warning"></i>
                 <h5 class="card-title">Vagas Ocupadas</h5>
-                <h5 class="text-danger"><b>{{ data.vagas_ocupadas }}</b></h5>
+                <h5 class="text-warning">
+                  <b>{{ data.vagas_ocupadas }}</b>
+                </h5>
               </div>
             </div>
           </div>
@@ -37,7 +41,45 @@
               <div class="card-body">
                 <i class="fas fa-warehouse fa-3x mb-3 text-info"></i>
                 <h5 class="card-title">Total de Vagas</h5>
-                <h5 class="text-primary"><b>{{ data.total_vagas }}</b></h5>
+                <h5 class="text-info">
+                  <b>{{ data.total_vagas }}</b>
+                </h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <i class="fas fa-user fa-3x mb-3 text-warning"></i>
+                <h5 class="card-title">Total de Clientes</h5>
+                <h5 class="text-warning">
+                  <b>{{ data.total_clientes}}</b>
+                </h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <i class="fas fa-dollar fa-3x mb-3 text-success"></i>
+                <h5 class="card-title">Total de Mensalidades</h5>
+                <h5 class="text-success">
+                  <b>{{ data.total_mensalidades | currency("pt-BR", "BRL")}}</b>
+                </h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <i class="fas fa-ticket fa-3x mb-3 text-danger"></i>
+                <h5 class="card-title">Ticket Médio p/ Cliente</h5>
+                <h5 class="text-danger">
+                  <b>{{ (data.total_mensalidades / data.total_clientes) | currency("pt-BR", "BRL")}}</b>
+                </h5>
               </div>
             </div>
           </div>

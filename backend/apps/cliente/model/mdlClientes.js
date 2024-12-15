@@ -49,13 +49,15 @@ const updateClientes = async (clienteREGPar) => {
       "UPDATE clientes SET " +
         "nome = $2, " +
         "email = $3, " +
-        "telefone = $4 " +
+        "telefone = $4, " +
+        "mensalidade = $5 " +
         "WHERE id = $1",
       [
         clienteREGPar.id,
         clienteREGPar.nome,
         clienteREGPar.email,
         clienteREGPar.telefone,
+        clienteREGPar.mensalidade,
       ]
     );
     linhasAfetadas = result.rowCount;

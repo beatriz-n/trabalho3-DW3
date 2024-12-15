@@ -31,6 +31,13 @@
                 </div>
               </div>
 
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="mensalidade">Mensalidade</label>
+                  <input type="number" class="form-control" id="mensalidade" x-model="form.mensalidade" x-bind:disabled="disabled">
+                </div>
+              </div>
+
             </div>
 
             <button type="button" @click="updateForm()" x-show="!disabled" class="btn btn-primary mt-4">Salvar</button>
@@ -55,6 +62,7 @@
             nome: "{{data.nome}}",
             email: "{{data.email}}",
             telefone: "{{data.telefone}}",
+            mensalidade: "{{data.mensalidade}}",
             removido: false
           },
           message: '',
@@ -91,7 +99,7 @@
                 headers: {
                   "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ id: this.form.id })
+                body: JSON.stringify({id: this.form.id})
               });
 
               const result = await response.json();
