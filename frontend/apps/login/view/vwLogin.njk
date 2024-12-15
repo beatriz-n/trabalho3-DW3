@@ -10,7 +10,7 @@
         <link href="static/css/styles.css" rel="stylesheet"/>
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
-    <body class="bg-primary">
+<body class="bg-primary" style="background-image: url('https://cvcrm.com.br/wp-content/uploads/2024/05/garagem-subterranea.webp'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -20,8 +20,8 @@
                             Aqui você pode gerenciar seus veículos, agendar serviços de forma prática e rápida!
                         </p>
                     </div>
-                    <div class="p-4">
-                        <div class="card">
+                    <div class="p-4 d-flex justify-content-center">
+                        <div class="card" style="width: 50rem;">
                             <h3 class="text-center font-weight-light my-4">Login</h3>
                             <div class="card-body w-100">
                                 <form id="formLogin">
@@ -40,23 +40,13 @@
                                         <label for="Password">Password*</label>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                                        <button type="button" style="width:2000px" class="btn btn-primary" onclick="vwLogin()">Login</button>
+                                        <button type="button" style="width:2000px" class="btn btn-success" onclick="vwLogin()">Login</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </main>
-            </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; DW3</div>
-                            <div>&middot;</div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
         <script src="/static/js/5.3/bootstrap.bundle.min.js"></script>
@@ -78,17 +68,15 @@
         $("#UserName").focus();
     };
     const constraints = {{ constraint | safe }};
-    function Validar(formDataPar) { // @ Convert FormData to plain object
+    function Validar(formDataPar) {
         let formDataObject = {};
         for (let [key, value] of formDataPar.entries()) {
             formDataObject[key] = value;
         }
         const errors = validate(formDataObject, constraints, {format: "detailed"});
-        // @ Mostra os erros de validação
         if (errors) {
             const errorMessages = Object.values(errors).flat();
             alert("O campo " + errorMessages[0]["attribute"] + " " + errorMessages[0]["options"].message);
-            // console.log("[vwLogin.js|Validar] Valor de erros:: " , errorMessages);
             const idFocus = "#" + errorMessages[0]["attribute"]
             $(idFocus).focus();
             return false;
