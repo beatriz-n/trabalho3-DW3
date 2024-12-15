@@ -37,36 +37,28 @@
     message: '',
     messageClass: '',
     
-    // Função de formatação para o campo 'tamanho' com máscara decimal
     formatDecimal(event) {
       let value = event.target.value;
 
-      // Remove qualquer caractere que não seja número ou ponto
       value = value.replace(/[^0-9.]/g, '');
 
-      // Permite apenas um ponto decimal
       const parts = value.split('.');
       if (parts.length > 2) {
         value = parts[0] + '.' + parts.slice(1).join('');
       }
 
-      // Se o número começar com um ponto, adiciona um zero à frente
       if (value.startsWith('.')) {
         value = '0' + value;
       }
 
-      // Garantir que sempre tenha duas casas decimais
       const decimalIndex = value.indexOf('.');
       if (decimalIndex !== -1) {
-        // Limita as casas decimais para no máximo 2
-        value = value.substring(0, decimalIndex + 3); // Mantém até 2 casas decimais
+        value = value.substring(0, decimalIndex + 3);
       }
 
-      // Se não houver ponto, adiciona ".00"
       if (!value.includes('.')) {
         value = value + '.00';
       } else {
-        // Se houver ponto, garante que tenha 2 casas decimais
         const [integer, decimal] = value.split('.');
         value = `${integer}.${decimal.substring(0, 2)}`;
       }

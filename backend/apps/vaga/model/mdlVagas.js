@@ -47,14 +47,14 @@ const updateVagas = async (vagaREGPar) => {
     const result = await db.query(
       "UPDATE vagas SET " +
         "descricao = $2, " +
-        "status = $3 " +        
+        "status = $3, " +        
         "tamanho = $4 " +
         "WHERE id = $1",
       [
         vagaREGPar.id,
         vagaREGPar.descricao,
         vagaREGPar.status,      
-        vagaREGPar.tamanho,      
+        vagaREGPar.tamanho,
       ]
     );
     linhasAfetadas = result.rowCount;

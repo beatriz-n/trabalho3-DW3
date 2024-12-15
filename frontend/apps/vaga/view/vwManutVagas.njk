@@ -1,5 +1,4 @@
 {% extends "templates/base.html" %}
-
 {% block content %}
   <ol class="breadcrumb mb-2">
     <li class="breadcrumb-item active">{{ title }}</li>
@@ -18,6 +17,7 @@
               <thead>
                 <tr>
                   <th class="text-center">Descrição</th>
+                  <th class="text-center">Tamanho</th>
                   <th class="text-center">Status</th>
                   <th class="text-center">Ações</th>
                 </tr>
@@ -26,13 +26,14 @@
                 {% for reg in data %}
                   <tr>
                     <td class="text-center">{{ reg.descricao }}</td>
+                    <td class="text-center">{{ reg.tamanho }}</td>
                     <td class="text-center">
                       {% if reg.status %}
                         <span class="badge badge-danger">Ocupado</span>
                       {% else %}
                         <span class="badge badge-success">Disponível</span>
                       {% endif %}
-                    </td>                    
+                    </td>
                     <td class="text-center">
                       <a href="/vagas/ViewVagas/{{ reg.id }}" title="Visualizar">
                         <i class="fas fa-search"></i>

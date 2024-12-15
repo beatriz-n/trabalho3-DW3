@@ -1,9 +1,8 @@
 {% extends "templates/base.html" %}
-
 {% block content %}
   <div x-data="carrosForm()">
     <ol class="breadcrumb mb-2">
-      <li class="breadcrumb-item active">{{title}}</li>
+      <li class="breadcrumb-item active">{{ title }}</li>
     </ol>
     <div class="row">
       <div class="col-12">
@@ -13,113 +12,124 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="clienteid">Cliente</label>
-                  <select class="form-select" aria-label="Default select example" id="clienteid" x-model="form.cliente_id" x-bind:disabled="disabled" name="clienteid">
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="clienteid"
+                    x-model="form.cliente_id"
+                    x-bind:disabled="disabled"
+                    name="clienteid">
+                    <option value="">[Selecione]</option>
                     {% for reg in cliente %}
-                        <option value="{{reg.id}}">{{reg.nome}}</option>
+                      <option value="{{ reg.id }}">{{ reg.nome }}</option>
                     {% endfor %}
-                   </select>
+                  </select>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="form-group">
                   <label for="modelo">Modelo</label>
-                  <input type="text" class="form-control" id="modelo" x-model="form.modelo" x-bind:disabled="disabled" step="0.01">
+                  <input type="text" class="form-control" id="modelo" x-model="form.modelo" x-bind:disabled="disabled" step="0.01"></div>
                 </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label for="placa">Placa</label>
-                  <input type="text" class="form-control" id="placa" x-model="form.placa" x-bind:disabled="disabled">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="placa">Placa</label>
+                    <input type="text" class="form-control" id="placa" x-model="form.placa" x-bind:disabled="disabled"></div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="valor">Valor</label>
+                      <input type="text" class="form-control" id="valor" x-model="form.valor" x-bind:disabled="disabled"></div>
+                    </div>
+                  </div>
+                  <button type="button" @click="updateForm()" x-show="!disabled" class="btn btn-primary mt-4">Salvar</button>
+                  <button type="button" @click="deleteForm()" x-show="!disabled" class="btn btn-danger mt-4">Excluir</button>
+                  <a href="/carros/ManutCarros" class="btn btn-info mt-4 ml-2" role="button">Retornar</a>
+                </form>
+                <div class="mt-3">
+                  <template x-if="message">
+                    <div :class="messageClass" x-text="message"></div>
+                  </template>
                 </div>
               </div>
             </div>
-
-            <button type="button" @click="updateForm()" x-show="!disabled" class="btn btn-primary mt-4">Salvar</button>
-            <button type="button" @click="deleteForm()" x-show="!disabled" class="btn btn-danger mt-4">Excluir</button>
-            <a href="/carros/ManutCarros" class="btn btn-info mt-4 ml-2" role="button">Retornar</a>
-          </form>
-
-          <div class="mt-3">
-            <template x-if="message">
-              <div :class="messageClass" x-text="message"></div>
-            </template>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function carrosForm() {
-        return {
-          form: {
-            id: "{{data.id}}",
-            modelo: "{{data.modelo}}",
-            placa: "{{data.placa}}",
-            cliente_id: "{{data.cliente_id}}",
-            removido: false
-          },
-          message: '',
-          messageClass: '',
-          disabled: {{disabled}},
-
-          async updateForm() {
-            try {
-              const response = await fetch('/carros/UpdateCarros', {
-                method: 'POST',
-                headers: {
-                  "Content-Type": "application/json"
+          <script>
+            function carrosForm() {
+              return {
+                form: {
+                  id: "{{ data.id }}",
+                  modelo: "{{ data.modelo }}",
+                  placa: "{{ data.placa }}",
+                  valor: "{{ data.valor }}",
+                  cliente_id: "{{ data.cliente_id }}",
+                  removido: false
                 },
-                body: JSON.stringify(this.form)
-              });
-
-              const result = await response.json();
-              if (result.status == "ok") {
-                alert("Carro atualizado com sucesso");
-              } else {
-                this.message = `Erro! Não foi possível atualizar: ${result.status}`;
-                this.messageClass = 'alert alert-danger';
-              }
-            } catch (error) {
-              this.message = `Erro de conexão: ${error.message}`;
-              this.messageClass = 'alert alert-danger';
-            }
-          },
-
-          async deleteForm() {
-            try {
-              const response = await fetch('/carros/DeleteCarros', {
-                method: 'POST',
-                headers: {
-                  "Content-Type": "application/json"
+                message: '',
+                messageClass: '',
+                disabled: {{ disabled }},
+                async updateForm() {
+                  try {
+                    const response = await fetch('/carros/UpdateCarros', {
+                      method: 'POST',
+                      headers: {
+                        "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify(this.form)
+                    });
+                    const result = await response.json();
+                    if (result.status == "ok") {
+                      alert("Carro atualizado com sucesso");
+                    } else {
+                      this.message = `Erro! Não foi possível atualizar: ${
+                        result.status
+                      }`;
+                      this.messageClass = 'alert alert-danger';
+                    }
+                  } catch (error) {
+                    this.message = `Erro de conexão: ${
+                      error.message
+                    }`;
+                    this.messageClass = 'alert alert-danger';
+                  }
                 },
-                body: JSON.stringify({ id: this.form.id })
-              });
-
-              const result = await response.json();
-              if (result.status == "ok") {
-                alert("Carro excluído com sucesso");
-                window.location.href = "/carros/ManutCarros";
-              } else {
-                this.message = `Erro! Não foi possível excluir: ${result.status}`;
-                this.messageClass = 'alert alert-danger';
-              }
-            } catch (error) {
-              this.message = `Erro de conexão: ${error.message}`;
-              this.messageClass = 'alert alert-danger';
+                async deleteForm() {
+                  try {
+                    const response = await fetch('/carros/DeleteCarros', {
+                      method: 'POST',
+                      headers: {
+                        "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify(
+                      {id: this.form.id})
+                    });
+                    const result = await response.json();
+                    if (result.status == "ok") {
+                      alert("Carro excluído com sucesso");
+                      window.location.href = "/carros/ManutCarros";
+                    } else {
+                      this.message = `Erro! Não foi possível excluir: ${
+                        result.status
+                      }`;
+                      this.messageClass = 'alert alert-danger';
+                    }
+                  } catch (error) {
+                    this.message = `Erro de conexão: ${
+                      error.message
+                    }`;
+                    this.messageClass = 'alert alert-danger';
+                  }
+                }
+              };
             }
-          }
-        };
-      }
-
-      document.addEventListener('DOMContentLoaded', function() {
-        const selectElement = document.getElementById('clienteid');
-        const clienteId = "{{data.cliente_id}}"; // Valor do cliente_id que você deseja selecionar
-
-        // Definindo a opção selecionada com base no cliente_id
-        if (clienteId) {
-            selectElement.value = clienteId;
-        }
-      });
-    </script>
-
-  {% endblock %}
+            document.addEventListener('DOMContentLoaded', function () {
+              const selectElement = document.getElementById('clienteid');
+              const clienteId = "{{ data.cliente_id }}";
+              // Valor do cliente_id que você deseja selecionar
+              // Definindo a opção selecionada com base no cliente_id
+              if (clienteId) {
+                selectElement.value = clienteId;
+              }
+            });
+          </script>
+        {% endblock %}

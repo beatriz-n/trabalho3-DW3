@@ -23,12 +23,13 @@ const insertCarros = async (carroREGPar) => {
   try {
     linhasAfetadas = (
       await db.query(
-        "INSERT INTO carros (cliente_id, modelo, placa) " +
-        "VALUES ($1, $2, $3)",
+        "INSERT INTO carros (cliente_id, modelo, placa, valor) " +
+        "VALUES ($1, $2, $3, $4)",
         [
           carroREGPar.cliente_id,
           carroREGPar.modelo,
           carroREGPar.placa,
+          carroREGPar.valor,
         ]
       )
     ).rowCount;
@@ -49,13 +50,15 @@ const updateCarros = async (carroREGPar) => {
       "UPDATE carros SET " +
         "cliente_id = $2, " +
         "modelo = $3, " +
-        "placa = $4 " +
+        "placa = $4, " +
+        "valor = $5 " +
         "WHERE id = $1",
       [
         carroREGPar.id,
         carroREGPar.cliente_id,
         carroREGPar.modelo,
         carroREGPar.placa,
+        carroREGPar.valor,
       ]
     );
     linhasAfetadas = result.rowCount;
