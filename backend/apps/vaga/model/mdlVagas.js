@@ -23,10 +23,11 @@ const insertVagas = async (vagaREGPar) => {
   try {
     linhasAfetadas = (
       await db.query(
-        "INSERT INTO vagas (descricao) " +
-        "VALUES ($1)",
+        "INSERT INTO vagas (descricao, tamanho) " +
+        "VALUES ($1, $2)",
         [
-          vagaREGPar.descricao       
+          vagaREGPar.descricao,  
+          vagaREGPar.tamanho,  
         ]
       )
     ).rowCount;
@@ -47,11 +48,13 @@ const updateVagas = async (vagaREGPar) => {
       "UPDATE vagas SET " +
         "descricao = $2, " +
         "status = $3 " +        
+        "tamanho = $4 " +
         "WHERE id = $1",
       [
         vagaREGPar.id,
         vagaREGPar.descricao,
-        vagaREGPar.status,        
+        vagaREGPar.status,      
+        vagaREGPar.tamanho,      
       ]
     );
     linhasAfetadas = result.rowCount;

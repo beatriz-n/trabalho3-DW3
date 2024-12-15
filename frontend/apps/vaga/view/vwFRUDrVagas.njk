@@ -18,6 +18,12 @@
               </div>
               <div class="col-md-12">
                 <div class="form-group">
+                  <label for="tamanho">Tamanho</label>
+                  <input type="text" class="form-control" id="tamanho" x-model="form.tamanho" x-bind:disabled="disabled">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
                   <label for="status">Status</label>
                   <select name="status" x-model="form.status" x-bind:disabled="disabled" class="form-control">
                     <option value="true" {% if status == true %}selected{% endif %}>Ocupado</option>
@@ -46,7 +52,8 @@
           form: {
             id: "{{data.id}}",
             descricao: "{{data.descricao}}",
-            status: "{{data.status}}"
+            status: "{{data.status}}",
+            tamanho: "{{data.tamanho}}",
           },
           message: '',
           messageClass: '',
